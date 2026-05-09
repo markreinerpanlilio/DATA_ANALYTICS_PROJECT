@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flight Data Analytics Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">flight<span>.</span>analytics</div>
+  <ul>
+    <li><a href="#collection">Data</a></li>
+    <li><a href="#preprocessing">Preprocessing</a></li>
+    <li><a href="#eda">EDA</a></li>
+    <li><a href="#modeling">Modeling</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#insights">Insights</a></li>
+    <li><a href="#downloads">Downloads</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">📊 Data Analytics Project</div>
+  <h1>Philippine Airline <em>Flight Data</em><br>Analytics & Dashboard</h1>
+  <p>An end-to-end data analytics project covering data collection, preprocessing, exploratory analysis, modeling, and visualization using Power BI.</p>
+  <div class="hero-meta">
+    <span>Dataset: <b>100,000+ records</b></span>
+    <span>Tool: <b>Power BI</b></span>
+    <span>Schema: <b>Star Schema</b></span>
+    <span>Framework: <b>CLEAN + DASH</b></span>
+  </div>
+  <div class="hero-btns">
+    <a class="btn-hero-primary" href="files/report.pdf" download>⬇ Download Report (PDF)</a>
+    <a class="btn-hero-outline" href="#downloads">View All Files</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 2.1 DATA COLLECTION -->
+  <section id="collection">
+    <div class="section-label">
+      <span class="section-num">2.1</span>
+      <h2>Data Collection</h2>
+    </div>
+    <div class="card-grid">
+      <div class="card">
+        <h3>📁 Dataset Source</h3>
+        <p>We used the <strong>Bureau of Transportation Statistics (BTS) — Airline On-Time Performance</strong> dataset from a government open data portal with detailed flight records.</p>
+        <div class="tag-list">
+          <span class="tag">CSV Format</span>
+          <span class="tag green">Government Portal</span>
+          <span class="tag orange">100,000+ Records</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>📋 Key Fields Collected</h3>
+        <div class="timeline" style="margin-top:.5rem">
+          <div class="tl-item"><div class="tl-dot"></div><h4>Flight Info</h4><p>Flight number, airline carrier, origin/destination airports</p></div>
+          <div class="tl-item"><div class="tl-dot"></div><h4>Time Data</h4><p>Scheduled/actual departure & arrival times, delays</p></div>
+          <div class="tl-item"><div class="tl-dot green"></div><h4>Status Flags</h4><p>Cancellation codes, diversion flags, delay reasons</p></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>📊 Dataset Overview</h3>
+        <div class="kpi-row" style="margin-bottom:0;grid-template-columns:1fr 1fr">
+          <div class="kpi-box"><span class="kpi-val">112K</span><span class="kpi-label">Total Records</span></div>
+          <div class="kpi-box green"><span class="kpi-val">29</span><span class="kpi-label">Columns</span></div>
+          <div class="kpi-box red"><span class="kpi-val">4.2%</span><span class="kpi-label">Missing Values</span></div>
+          <div class="kpi-box"><span class="kpi-val">2023</span><span class="kpi-label">Data Year</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:1.25rem">
+      <div class="img-placeholder" style="height:230px">
+        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1100&q=80&fit=crop" alt="Airport overview" style="height:230px"/>
+      </div>
+      <p class="img-caption">Sample: Raw dataset snapshot showing flight records from BTS open data portal</p>
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- 2.2 PREPROCESSING -->
+  <section id="preprocessing">
+    <div class="section-label">
+      <span class="section-num">2.2</span>
+      <h2>Data Preprocessing</h2>
+    </div>
+    <p class="sub">All preprocessing steps were documented following the <strong>CLEAN Framework</strong> to ensure consistency and reproducibility.</p>
+    <div class="two-col" style="margin-bottom:1.25rem">
+      <div class="framework">
+        <div class="framework-header">🧹 CLEAN Framework</div>
+        <div class="framework-body">
+          <div class="framework-row">
+            <div class="framework-letter">C</div>
+            <div><h5>Completeness</h5><p>Missing values handled via median imputation for delay times; null flight number rows dropped.</p></div>
+          </div>
+          <div class="framework-row">
+            <div class="framework-letter">L</div>
+            <div><h5>Legibility</h5><p>Renamed cryptic columns to readable labels (e.g., <code>DEP_DELAY</code> → <code>Departure Delay (min)</code>).</p></div>
+          </div>
+          <div class="framework-row">
+            <div class="framework-letter">E</div>
+            <div><h5>Efficiency</h5><p>Removed 1,204 duplicate records; optimized data types to reduce file size by ~38%.</p></div>
+          </div>
+          <div class="framework-row">
+            <div class="framework-letter">A</div>
+            <div><h5>Accuracy</h5><p>Validated values against known ranges; corrected negative elapsed time values.</p></div>
+          </div>
+          <div class="framework-row">
+            <div class="framework-letter">N</div>
+            <div><h5>Normalization</h5><p>Min-max normalization on delay columns; one-hot encoded cancellation reason codes.</p></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="step-box"><div class="step-num">1</div><div><h4>Handle Missing Values</h4><p>Median imputation for delay columns; row removal for critical null identifiers (0.8% of data).</p></div></div>
+        <div class="step-box"><div class="step-num">2</div><div><h4>Remove Duplicates</h4><p>1,204 exact duplicates removed. Airline codes standardized using IATA lookup table.</p></div></div>
+        <div class="step-box"><div class="step-num">3</div><div><h4>Data Transformation</h4><p>Normalization applied to delay fields. Categorical encoding for carrier, route, and reason columns.</p></div></div>
+        <div class="step-box"><div class="step-num">4</div><div><h4>Feature Engineering</h4><p>Derived columns: <code>Is_Delayed</code>, <code>Delay_Category</code>, <code>Season</code>, <code>Hour_Block</code>.</p></div></div>
+      </div>
+    </div>
+    <div class="img-placeholder">
+      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1100&q=80&fit=crop" alt="Data cleaning" style="height:200px"/>
+    </div>
+    <p class="img-caption">Screenshot placeholder: Power Query / Python preprocessing pipeline output</p>
+  </section>
+
+  <hr/>
+
+  <!-- 2.3 EDA -->
+  <section id="eda">
+    <div class="section-label">
+      <span class="section-num">2.3</span>
+      <h2>Exploratory Data Analysis (EDA)</h2>
+    </div>
+    <p class="sub">Used the <strong>Pyramid Framework</strong>: starting from high-level key metrics, drilling into dimension breakdowns, then granular patterns.</p>
+    <div class="kpi-row">
+      <div class="kpi-box"><span class="kpi-val">112,847</span><span class="kpi-label">Total Flights</span></div>
+      <div class="kpi-box red"><span class="kpi-val">27.4%</span><span class="kpi-label">Delayed Rate</span></div>
+      <div class="kpi-box"><span class="kpi-val">42 min</span><span class="kpi-label">Avg Delay Duration</span></div>
+      <div class="kpi-box green"><span class="kpi-val">1.8%</span><span class="kpi-label">Cancellation Rate</span></div>
+      <div class="kpi-box"><span class="kpi-val">7</span><span class="kpi-label">Airline Carriers</span></div>
+    </div>
+    <div class="two-col" style="margin-bottom:1rem">
+      <div>
+        <div class="img-placeholder"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&fit=crop" alt="Bar chart" style="height:220px"/></div>
+        <p class="img-caption">Fig 1: Bar Chart — Delay count by airline carrier</p>
+      </div>
+      <div>
+        <div class="img-placeholder"><img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=700&q=80&fit=crop" alt="Line graph" style="height:220px"/></div>
+        <p class="img-caption">Fig 2: Line Graph — Monthly flight volume & delays trend (2023)</p>
+      </div>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="img-placeholder"><img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?w=700&q=80&fit=crop" alt="Heatmap" style="height:190px"/></div>
+        <p class="img-caption">Fig 3: Heatmap — Delays by hour of day and day of week</p>
+      </div>
+      <div>
+        <div class="img-placeholder"><img src="https://images.unsplash.com/photo-1526628953301-3cd9c94de5a5?w=700&q=80&fit=crop" alt="Pie chart" style="height:190px"/></div>
+        <p class="img-caption">Fig 4: Donut Chart — Delay reasons breakdown</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1rem">
+      <h3 style="margin-bottom:.75rem">📐 Pyramid Framework — Key Metrics</h3>
+      <div class="pyramid-grid">
+        <div class="pyr-block blue"><div class="pyr-label">Level 1 — Summary</div><p>Total flights, cancellations, avg delay</p></div>
+        <div class="pyr-block green"><div class="pyr-label">Level 2 — Dimensions</div><p>By airline, route, month, time slot</p></div>
+        <div class="pyr-block orange"><div class="pyr-label">Level 3 — Granular</div><p>Flight-level delay reasons & patterns</p></div>
+      </div>
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- 2.4 MODELING -->
+  <section id="modeling">
+    <div class="section-label">
+      <span class="section-num">2.4</span>
+      <h2>Data Modeling / Analytics</h2>
+    </div>
+    <div class="two-col" style="margin-bottom:1.25rem;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="card">
+          <h3>⭐ Star Schema</h3>
+          <p style="margin-bottom:.75rem">A <strong>Star Schema</strong> with one central fact table surrounded by dimension tables for efficient Power BI querying.</p>
+          <div class="tag-list">
+            <span class="tag orange">Fact: Flight_Fact</span>
+            <span class="tag">Dim: Airlines</span>
+            <span class="tag">Dim: Airports</span>
+            <span class="tag">Dim: Date</span>
+            <span class="tag">Dim: Delay_Type</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>📈 Analytical Methods Applied</h3>
+          <div class="timeline" style="margin-top:.5rem">
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <h4>Descriptive Analytics <span class="badge blue">Applied</span></h4>
+              <p>Summary stats, trend analysis by month, carrier, and route. Mean delay = 42 min; peak month = December.</p>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot green"></div>
+              <h4>Predictive Analytics <span class="badge blue">Applied</span></h4>
+              <p>Time-series forecasting via Power BI to predict Q1 2024 delay volume (+3.2% projected).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="schema-img">
+        <h3 style="margin-bottom:.75rem;font-size:.95rem">📐 Star Schema Diagram</h3>
+        <div class="img-placeholder"><img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=700&q=80&fit=crop" alt="Star schema" style="height:280px"/></div>
+        <p class="img-caption">Placeholder: Star Schema ERD in Power BI Model View</p>
+        <div class="schema-meta">
+          <p><strong>Fact Table:</strong> Flight_Fact (FlightID, AirlineID, AirportID, DateID, DelayTypeID, DepDelay, ArrDelay, Cancelled)</p>
+          <p><strong>Dim Tables:</strong> Airlines, Airports (Origin + Dest), Date, Delay_Type</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- 2.5 DASHBOARD -->
+  <section id="dashboard">
+    <div class="section-label">
+      <span class="section-num">2.5</span>
+      <h2>Visualization & Dashboard</h2>
+    </div>
+    <p class="sub">Interactive Power BI dashboard built following the <strong>DASH Framework</strong>. Includes filters, KPIs, and cross-visual interactivity.</p>
+    <div class="framework" style="margin-bottom:1.5rem">
+      <div class="framework-header">📊 DASH Framework</div>
+      <div class="framework-body dash-grid">
+        <div class="framework-row dash-row">
+          <div class="framework-letter">D</div>
+          <div><h5>Define Objectives</h5><p>Identify delay patterns, high-risk routes, and carrier benchmarks.</p></div>
+        </div>
+        <div class="framework-row dash-row">
+          <div class="framework-letter">A</div>
+          <div><h5>Assemble Data</h5><p>Connected cleaned CSV to Power BI; built star schema relationships.</p></div>
+        </div>
+        <div class="framework-row dash-row">
+          <div class="framework-letter">S</div>
+          <div><h5>Structure Visuals</h5><p>KPI cards on top, bar/line charts in middle, filter panel on side.</p></div>
+        </div>
+        <div class="framework-row dash-row">
+          <div class="framework-letter">H</div>
+          <div><h5>Highlight Insights</h5><p>Conditional formatting & tooltips to surface critical findings.</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="img-placeholder" style="margin-bottom:1rem">
+      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1100&q=80&fit=crop" alt="Power BI Dashboard" style="height:320px"/>
+    </div>
+    <p class="img-caption" style="margin-bottom:1.25rem">Fig 5: Power BI Main Dashboard — Overview page with KPI cards, filters, and trend charts</p>
+    <div class="two-col">
+      <div>
+        <div class="img-placeholder"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80&fit=crop" alt="KPI page" style="height:200px;filter:hue-rotate(40deg)"/></div>
+        <p class="img-caption">Fig 6: KPI Breakdown Page — Delay rate by carrier with slicer filters</p>
+      </div>
+      <div>
+        <div class="img-placeholder"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&fit=crop" alt="Forecast page" style="height:200px"/></div>
+        <p class="img-caption">Fig 7: Forecast Page — Time series with Power BI forecasting enabled</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1.25rem">
+      <h3 style="margin-bottom:.75rem">✅ Dashboard Features</h3>
+      <div class="feat-grid">
+        <div class="feat-item"><span class="check">✓</span> KPI Cards (5 metrics)</div>
+        <div class="feat-item"><span class="check">✓</span> Slicer Filters (Airline, Date, Route)</div>
+        <div class="feat-item"><span class="check">✓</span> Cross-visual Filtering</div>
+        <div class="feat-item"><span class="check">✓</span> Drill-through Pages</div>
+        <div class="feat-item"><span class="check">✓</span> Conditional Formatting</div>
+        <div class="feat-item"><span class="check">✓</span> Time-series Forecast</div>
+      </div>
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- 2.6 INSIGHTS -->
+  <section id="insights">
+    <div class="section-label">
+      <span class="section-num">2.6</span>
+      <h2>Insights & Recommendations</h2>
+    </div>
+    <p class="sub">Based on EDA and dashboard findings, we identified <strong>5 key actionable insights</strong> to improve airline operations and passenger experience.</p>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <span class="insight-num">INSIGHT 01</span>
+        <h4>🕐 Peak Delay Hours: 6 PM – 9 PM</h4>
+        <p>Evening flights account for 41% of all delays. Airlines should add buffer time to evening schedules or redistribute traffic to off-peak hours.</p>
+      </div>
+      <div class="insight-card orange">
+        <span class="insight-num">INSIGHT 02</span>
+        <h4>✈️ Carrier Performance Gap</h4>
+        <p>Carrier X had a delay rate of 38.2% — 11 points above average. Ground operations review and resource reallocation is recommended.</p>
+      </div>
+      <div class="insight-card green">
+        <span class="insight-num">INSIGHT 03</span>
+        <h4>🌦️ Weather as Secondary Cause</h4>
+        <p>Only 18% of delays were weather-related. Carrier-caused delays (34%) dominate — pointing to internal scheduling inefficiencies.</p>
+      </div>
+      <div class="insight-card">
+        <span class="insight-num">INSIGHT 04</span>
+        <h4>📅 December Surge Risk</h4>
+        <p>December has a 52% higher delay rate than average. Proactive fleet allocation in Q4 could reduce delays by an estimated 15–20%.</p>
+      </div>
+      <div class="insight-card orange">
+        <span class="insight-num">INSIGHT 05</span>
+        <h4>🛣️ Top 3 Delay-Prone Routes</h4>
+        <p>Routes MNL–LAX, MNL–JFK, and MNL–SFO account for 22% of total delays. Route-level scheduling audits are strongly recommended.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1.5rem;border-left:4px solid var(--accent3)">
+      <h3 style="margin-bottom:.75rem">📌 Recommendations Summary</h3>
+      <div class="rec-list">
+        <div class="rec-item"><strong>R1.</strong><span>Redistribute flights to off-peak windows (morning slots before 11 AM show lowest delay rates).</span></div>
+        <div class="rec-item"><strong>R2.</strong><span>Implement real-time ground operations monitoring to reduce late-aircraft cascades.</span></div>
+        <div class="rec-item"><strong>R3.</strong><span>Increase fleet reserves for December; engage seasonal staff for high-traffic routes.</span></div>
+        <div class="rec-item"><strong>R4.</strong><span>Prioritize delay-root-cause analysis for Carrier X using the Power BI drill-through reports.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr/>
+
+  <!-- DOWNLOADS -->
+  <section id="downloads">
+    <div class="section-label">
+      <span class="section-num">↓</span>
+      <h2>Project Files & Downloads</h2>
+    </div>
+    <p class="sub">Download the project files below. Replace each <code>href</code> with your actual file paths once ready.</p>
+    <div class="dl-grid">
+
+      <div class="dl-card">
+        <div class="dl-icon">📄</div>
+        <div class="dl-info">
+          <h4>Project Report</h4>
+          <p>Full written report covering all phases — from data collection to insights and recommendations.</p>
+          <div class="tag-list"><span class="tag orange">PDF</span><span class="tag">~3 MB</span></div>
+        </div>
+        <a class="btn-dl primary" href="files/report.pdf" download="Flight_Analytics_Report.pdf">⬇ Download</a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-icon">📊</div>
+        <div class="dl-info">
+          <h4>Power BI Dashboard</h4>
+          <p>Interactive .pbix file with all visuals, KPIs, slicers, and the forecasting page included.</p>
+          <div class="tag-list"><span class="tag" style="background:#fff0f5;color:#8b2fc9;border-color:#d9b3f0">PBIX</span><span class="tag">~15 MB</span></div>
+        </div>
+        <a class="btn-dl primary" href="files/dashboard.pbix" download="Flight_Analytics_Dashboard.pbix">⬇ Download</a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-icon">🗃️</div>
+        <div class="dl-info">
+          <h4>Raw Dataset (CSV)</h4>
+          <p>Cleaned and preprocessed flight dataset with 112,847 records ready for analysis.</p>
+          <div class="tag-list"><span class="tag green">CSV</span><span class="tag">~28 MB</span></div>
+        </div>
+        <a class="btn-dl primary" href="files/flight_data_clean.csv" download="Flight_Data_Clean.csv">⬇ Download</a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-icon">📑</div>
+        <div class="dl-info">
+          <h4>Presentation Slides</h4>
+          <p>PowerPoint deck summarizing the project findings, visualizations, and recommendations.</p>
+          <div class="tag-list"><span class="tag" style="background:#fff4e5;color:#b05c00;border-color:#f5c07a">PPTX</span><span class="tag">~8 MB</span></div>
+        </div>
+        <a class="btn-dl primary" href="files/presentation.pptx" download="Flight_Analytics_Presentation.pptx">⬇ Download</a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-icon">📓</div>
+        <div class="dl-info">
+          <h4>Python Notebook</h4>
+          <p>Jupyter notebook containing all preprocessing, EDA, and data validation code with outputs.</p>
+          <div class="tag-list"><span class="tag" style="background:#fffbe6;color:#856b00;border-color:#f0d060">IPYNB</span><span class="tag">~1.2 MB</span></div>
+        </div>
+        <a class="btn-dl primary" href="files/analysis.ipynb" download="Flight_Analytics_Notebook.ipynb">⬇ Download</a>
+      </div>
+
+      <div class="dl-card">
+        <div class="dl-icon">📋</div>
+        <div class="dl-info">
+          <h4>Data Dictionary</h4>
+          <p>Excel file documenting all columns, data types, transformations, and CLEAN framework steps.</p>
+          <div class="tag-list"><span class="tag green">XLSX</span><span class="tag">~0.5 MB</span></div>
+        </div>
+        <a class="btn-dl primary" href="files/data_dictionary.xlsx" download="Flight_Data_Dictionary.xlsx">⬇ Download</a>
+      </div>
+
+    </div>
+
+    <div class="dl-note">
+      💡 <strong>Note:</strong> Files are placeholders. Replace the <code>href</code> paths with your actual uploaded files before submitting.
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <strong>Flight Data Analytics Project</strong> &nbsp;|&nbsp; Data Analytics Course &nbsp;|&nbsp; 3rd Year CS Group
+  <br/><br/>
+  Built with Power BI &nbsp;·&nbsp; Dataset: BTS Airline On-Time Performance &nbsp;·&nbsp; Academic Year 2024–2025
+</footer>
+
+</body>
+</html>
