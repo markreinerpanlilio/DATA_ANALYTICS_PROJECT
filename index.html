@@ -29,7 +29,7 @@
   <div class="hero-meta">
     <span>Dataset: <b>7M+ records</b></span>
     <span>Tool: <b>Power BI</b></span>
-    <span>Schema: <b>Unknown</b></span>
+    <span>Schema: <b>Star Schema</b></span>
   </div>
   <div class="hero-btns">
     <a class="btn-hero-primary" href="files/report.pdf" download>⬇ Download Report (PDF)</a>
@@ -141,7 +141,7 @@
         </div>
 
         <div>
-          <h3>❌ E — Eliminate Errors</h3>
+          <h3>E — Eliminate Errors</h3>
 
           <p>
             We evaluated the dataset for any unsolvable issues and found no problems. The data quality checks showed no signs of errors, inconsistencies, or anomalies.           </p>
@@ -164,11 +164,10 @@
         </div>
 
         <div>
-          <h3>🎯 A — Accuracy</h3>
+          <h3> A — Accuracy</h3>
 
           <p>
-            Numerical values such as delays, air time, and distance were checked to ensure valid and realistic values.
-          </p>
+            The dataset was enhanced by utilizing the existing sliced date columns already provided in the dataset, such as year, month, and day fields, for easier analysis and visualization. Additional derived information, such as the <strong>delay_status</strong> category, was also applied to classify flights as Early, On-Time, or Delayed based on their delay values.          </p>
 
           <div class="tag-list">
             <span class="tag green">Validated Data</span>
