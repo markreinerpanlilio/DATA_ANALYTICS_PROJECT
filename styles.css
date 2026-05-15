@@ -26,12 +26,27 @@ nav ul a:hover{background:var(--tag-bg);color:var(--accent)}
 /* HERO */
 .hero{
   background:linear-gradient(135deg,#1e2f6e 0%,#3b6fd4 60%,#5a8fe8 100%);
-  color:#fff;padding:5rem 2rem 4rem;text-align:center;position:relative;overflow:hidden;
+  color:#fff;
+  padding:5rem 2rem 4rem;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
 }
+
 .hero::before{
-  content:'';position:absolute;inset:0;
-  background-image:radial-gradient(circle at 20% 50%,rgba(255,255,255,.06) 0%,transparent 50%),
-                   radial-gradient(circle at 80% 20%,rgba(255,255,255,.08) 0%,transparent 40%);
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 20% 50%,rgba(255,255,255,.06) 0%,transparent 50%),
+    radial-gradient(circle at 80% 20%,rgba(255,255,255,.08) 0%,transparent 40%);
+  
+  pointer-events:none;
+}
+
+.hero > *{
+  position:relative;
+  z-index:2;
 }
 .hero-tag{
   display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);
