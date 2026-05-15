@@ -233,39 +233,31 @@
     <div class="two-col" style="margin-bottom:1.25rem;align-items:start">
       <div style="display:flex;flex-direction:column;gap:1rem">
         <div class="card">
-          <h3>⭐ Star Schema</h3>
+          <h3>Star Schema</h3>
           <p style="margin-bottom:.75rem">A <strong>Star Schema</strong> with one central fact table surrounded by dimension tables for efficient Power BI querying.</p>
-          <div class="tag-list">
-            <span class="tag orange">Fact: Flight_Fact</span>
-            <span class="tag">Dim: Airlines</span>
-            <span class="tag">Dim: Airports</span>
-            <span class="tag">Dim: Date</span>
-            <span class="tag">Dim: Delay_Type</span>
-          </div>
         </div>
         <div class="card">
-          <h3>📈 Analytical Methods Applied</h3>
+          <h3>Analytical Methods Applied</h3>
           <div class="timeline" style="margin-top:.5rem">
             <div class="tl-item">
               <div class="tl-dot"></div>
               <h4>Descriptive Analytics <span class="badge blue">Applied</span></h4>
-              <p>Summary stats, trend analysis by month, carrier, and route. Mean delay = 42 min; peak month = December.</p>
+              <p>Summary statistics, KPI analysis, and trend analysis were performed using Power BI. The dashboard analyzed total flights, average arrival delay, delay rate, cancellation rate, flight activity by airline, and monthly flight delay trends.</p>
             </div>
             <div class="tl-item">
               <div class="tl-dot green"></div>
               <h4>Predictive Analytics <span class="badge blue">Applied</span></h4>
-              <p>Time-series forecasting via Power BI to predict Q1 2024 delay volume (+3.2% projected).</p>
+              <p>Power BI forecasting was applied through time-series analysis to identify and estimate future flight delay trends based on monthly flight data.</p>
             </div>
           </div>
         </div>
       </div>
       <div class="schema-img">
         <h3 style="margin-bottom:.75rem;font-size:.95rem">📐 Star Schema Diagram</h3>
-        <div class="img-placeholder"><img src="images/Star_Schema.png" alt="Star schema" style="height:280px"/></div>
-        <p class="img-caption">Placeholder: Star Schema ERD in Power BI Model View</p>
+        <div class="img-placeholder"><img src="images/star1.png" alt="Star schema" style="height:280px"/></div>
         <div class="schema-meta">
-          <p><strong>Fact Table:</strong> Flight_Fact (FlightID, AirlineID, AirportID, DateID, DelayTypeID, DepDelay, ArrDelay, Cancelled)</p>
-          <p><strong>Dim Tables:</strong> Airlines, Airports (Origin + Dest), Date, Delay_Type</p>
+          <p><strong>Fact Table:</strong> flight_data_fact</p>
+          <p><strong>Dim Tables:</strong> Airline, Origin Airport, Date, and Destination</p>
         </div>
       </div>
     </div>
