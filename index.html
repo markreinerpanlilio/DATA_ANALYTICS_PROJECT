@@ -23,14 +23,13 @@
 </nav>
 
 <div class="hero">
-  <div class="hero-tag">📊 Data Analytics Project</div>
-  <h1>Philippine Airline <em>Flight Data</em><br>Analytics & Dashboard</h1>
-  <p>An end-to-end data analytics project covering data collection, preprocessing, exploratory analysis, modeling, and visualization using Power BI.</p>
+  <div class="hero-tag">Data Analytics Project</div>
+  <h1>Flight Delay Dataset — 2024</h1>
+  <p>Analyzing flight delays, cancellations, and airline performance using real-world flight data and Power BI visualization.</p>
   <div class="hero-meta">
-    <span>Dataset: <b>100,000+ records</b></span>
+    <span>Dataset: <b>7M+ records</b></span>
     <span>Tool: <b>Power BI</b></span>
-    <span>Schema: <b>Star Schema</b></span>
-    <span>Framework: <b>CLEAN + DASH</b></span>
+    <span>Schema: <b>Unknown</b></span>
   </div>
   <div class="hero-btns">
     <a class="btn-hero-primary" href="files/report.pdf" download>⬇ Download Report (PDF)</a>
@@ -54,14 +53,6 @@
           <span class="tag">CSV Format</span>
           <span class="tag green">Government Portal</span>
           <span class="tag orange">100,000+ Records</span>
-        </div>
-      </div>
-      <div class="card">
-        <h3>📋 Key Fields Collected</h3>
-        <div class="timeline" style="margin-top:.5rem">
-          <div class="tl-item"><div class="tl-dot"></div><h4>Flight Info</h4><p>Flight number, airline carrier, origin/destination airports</p></div>
-          <div class="tl-item"><div class="tl-dot"></div><h4>Time Data</h4><p>Scheduled/actual departure & arrival times, delays</p></div>
-          <div class="tl-item"><div class="tl-dot green"></div><h4>Status Flags</h4><p>Cancellation codes, diversion flags, delay reasons</p></div>
         </div>
       </div>
       <div class="card">
@@ -90,44 +81,130 @@
       <span class="section-num">2.2</span>
       <h2>Data Preprocessing</h2>
     </div>
-    <p class="sub">All preprocessing steps were documented following the <strong>CLEAN Framework</strong> to ensure consistency and reproducibility.</p>
-    <div class="two-col" style="margin-bottom:1.25rem">
-      <div class="framework">
-        <div class="framework-header">🧹 CLEAN Framework</div>
-        <div class="framework-body">
-          <div class="framework-row">
-            <div class="framework-letter">C</div>
-            <div><h5>Completeness</h5><p>Missing values handled via median imputation for delay times; null flight number rows dropped.</p></div>
-          </div>
-          <div class="framework-row">
-            <div class="framework-letter">L</div>
-            <div><h5>Legibility</h5><p>Renamed cryptic columns to readable labels (e.g., <code>DEP_DELAY</code> → <code>Departure Delay (min)</code>).</p></div>
-          </div>
-          <div class="framework-row">
-            <div class="framework-letter">E</div>
-            <div><h5>Efficiency</h5><p>Removed 1,204 duplicate records; optimized data types to reduce file size by ~38%.</p></div>
-          </div>
-          <div class="framework-row">
-            <div class="framework-letter">A</div>
-            <div><h5>Accuracy</h5><p>Validated values against known ranges; corrected negative elapsed time values.</p></div>
-          </div>
-          <div class="framework-row">
-            <div class="framework-letter">N</div>
-            <div><h5>Normalization</h5><p>Min-max normalization on delay columns; one-hot encoded cancellation reason codes.</p></div>
+
+    <p class="sub">
+      The dataset was cleaned and prepared by following the 
+      <strong>CLEAN Framework</strong> to improve data quality and reliability before analysis.
+    </p>
+
+    <div style="display:flex; flex-direction:column; gap:1.5rem;">
+
+      <!-- C -->
+      <div class="card" style="display:grid; grid-template-columns:320px 1fr; gap:1.5rem; align-items:center;">
+        
+        <div class="img-placeholder">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=700&q=80&fit=crop"
+              alt="Completeness"
+              style="height:220px"/>
+        </div>
+
+        <div>
+          <h3>C - Conceptualize the data</h3>
+
+          <p>
+            The dataset was conceptualized by identifying the grain, key metrics, and dimensions needed for analysis. The grain of the dataset is one record representing a single flight instance, while the key metrics include arrival delay, departure delay, cancellation rate, average distance, and total flights. The identified dimensions include Date, Airline, Origin Airport, Destination Airport, and Flight Status, which were later used for dashboard visualizations and the Star Schema model.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- L -->
+      <div class="card" style="display:grid; grid-template-columns:320px 1fr; gap:1.5rem; align-items:center;">
+        
+        <div class="img-placeholder">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=80&fit=crop"
+              alt="Legibility"
+              style="height:220px"/>
+        </div>
+
+        <div>
+          <h3>L — Locate the solvable issues</h3>
+
+          <p>
+            Column names, formats, and values were reviewed and organized to make the dataset easier to understand and analyze.
+          </p>
+
+          <div class="tag-list">
+            <span class="tag">Readable Format</span>
+            <span class="tag orange">Column Review</span>
           </div>
         </div>
+
       </div>
-      <div>
-        <div class="step-box"><div class="step-num">1</div><div><h4>Handle Missing Values</h4><p>Median imputation for delay columns; row removal for critical null identifiers (0.8% of data).</p></div></div>
-        <div class="step-box"><div class="step-num">2</div><div><h4>Remove Duplicates</h4><p>1,204 exact duplicates removed. Airline codes standardized using IATA lookup table.</p></div></div>
-        <div class="step-box"><div class="step-num">3</div><div><h4>Data Transformation</h4><p>Normalization applied to delay fields. Categorical encoding for carrier, route, and reason columns.</p></div></div>
-        <div class="step-box"><div class="step-num">4</div><div><h4>Feature Engineering</h4><p>Derived columns: <code>Is_Delayed</code>, <code>Delay_Category</code>, <code>Season</code>, <code>Hour_Block</code>.</p></div></div>
+
+      <!-- E -->
+      <div class="card" style="display:grid; grid-template-columns:320px 1fr; gap:1.5rem; align-items:center;">
+        
+        <div class="img-placeholder">
+          <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=700&q=80&fit=crop"
+              alt="Eliminate Errors"
+              style="height:220px"/>
+        </div>
+
+        <div>
+          <h3>❌ E — Eliminate Errors</h3>
+
+          <p>
+            Duplicate records and inconsistent values were removed to ensure cleaner and more accurate flight data.
+          </p>
+
+          <div class="tag-list">
+            <span class="tag red">Duplicates Removed</span>
+            <span class="tag">Consistency Check</span>
+          </div>
+        </div>
+
       </div>
+
+      <!-- A -->
+      <div class="card" style="display:grid; grid-template-columns:320px 1fr; gap:1.5rem; align-items:center;">
+        
+        <div class="img-placeholder">
+          <img src="https://images.unsplash.com/photo-1543286386-713bdd548da4?w=700&q=80&fit=crop"
+              alt="Accuracy"
+              style="height:220px"/>
+        </div>
+
+        <div>
+          <h3>🎯 A — Accuracy</h3>
+
+          <p>
+            Numerical values such as delays, air time, and distance were checked to ensure valid and realistic values.
+          </p>
+
+          <div class="tag-list">
+            <span class="tag green">Validated Data</span>
+            <span class="tag">Quality Check</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- N -->
+      <div class="card" style="display:grid; grid-template-columns:320px 1fr; gap:1.5rem; align-items:center;">
+        
+        <div class="img-placeholder">
+          <img src="https://images.unsplash.com/photo-1526628953301-3cd9c94de5a5?w=700&q=80&fit=crop"
+              alt="Normalization"
+              style="height:220px"/>
+        </div>
+
+        <div>
+          <h3>⚙️ N — Normalization</h3>
+
+          <p>
+            Data transformation and formatting were applied to prepare the dataset for Power BI visualization and analytics.
+          </p>
+
+          <div class="tag-list">
+            <span class="tag orange">Transformation</span>
+            <span class="tag">Prepared for BI</span>
+          </div>
+        </div>
+
+      </div>
+
     </div>
-    <div class="img-placeholder">
-      <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1100&q=80&fit=crop" alt="Data cleaning" style="height:200px"/>
-    </div>
-    <p class="img-caption">Screenshot placeholder: Power Query / Python preprocessing pipeline output</p>
   </section>
 
   <hr/>
