@@ -120,12 +120,6 @@ Recommendations were provided to improve scheduling, operational monitoring, and
 
 ---
 
-# Developers
-
-3rd Year BS Computer Science Students
-
----
-
 # Academic Purpose
 
 This project was developed for academic and educational purposes as part of a Data Analytics course requirement.
